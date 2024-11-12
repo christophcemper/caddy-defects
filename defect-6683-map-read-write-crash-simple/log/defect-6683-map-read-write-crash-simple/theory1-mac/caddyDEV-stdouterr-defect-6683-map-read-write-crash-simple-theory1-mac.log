@@ -1,0 +1,28 @@
+{"level":"info","ts":1731422843.0416682,"msg":"using config from file","file":"./CaddyfileDEV-defect-6683-map-read-write-crash-simple-theory1"}
+{"level":"info","ts":1731422843.0439959,"msg":"adapted config to JSON","adapter":"caddyfile"}
+{"level":"warn","ts":1731422843.0440059,"msg":"Caddyfile input is not formatted; run 'caddy fmt --overwrite' to fix inconsistencies","adapter":"caddyfile","file":"./CaddyfileDEV-defect-6683-map-read-write-crash-simple-theory1","line":146}
+{"level":"info","ts":1731422843.044805,"logger":"admin","msg":"admin endpoint started","address":"127.0.0.1:2019","enforce_origin":false,"origins":["//127.0.0.1:2019","//localhost:2019","//[::1]:2019"]}
+{"level":"info","ts":1731422843.045064,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0x140007dd280"}
+{"level":"info","ts":1731422843.045256,"logger":"http.auto_https","msg":"server is listening only on the HTTPS port but has no TLS connection policies; adding one to enable TLS","server_name":"srv0","https_port":443}
+{"level":"info","ts":1731422843.0452638,"logger":"http.auto_https","msg":"enabling automatic HTTP->HTTPS redirects","server_name":"srv0"}
+{"level":"warn","ts":1731422843.045808,"logger":"http.handlers.cache","msg":"You're running Souin with the default storage that is not optimized and for development purpose. We recommend to use at least one of the storages from https://github.com/darkweak/storages"}
+{"level":"info","ts":1731422843.045824,"logger":"http.handlers.cache","msg":"Set backend timeout to 10s"}
+{"level":"info","ts":1731422843.045826,"logger":"http.handlers.cache","msg":"Set cache timeout to 10s"}
+{"level":"info","ts":1731422843.045828,"logger":"http.handlers.cache","msg":"Souin configuration is now loaded."}
+{"level":"info","ts":1731422843.050569,"logger":"pki.ca.local","msg":"root certificate is already trusted by system","path":"storage:pki/authorities/local/root.crt"}
+{"level":"info","ts":1731422843.05075,"logger":"http","msg":"enabling HTTP/3 listener","addr":":443"}
+{"level":"info","ts":1731422843.050897,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+{"level":"info","ts":1731422843.050943,"logger":"http.log","msg":"server running","name":"remaining_auto_https_redirects","protocols":["h1","h2","h3"]}
+{"level":"info","ts":1731422843.050946,"logger":"http","msg":"enabling automatic TLS certificate management","domains":["dev-server.example.com","localhost"]}
+{"level":"warn","ts":1731422843.051212,"logger":"tls","msg":"stapling OCSP","error":"no OCSP stapling for [dev-server.example.com]: no OCSP server specified in certificate","identifiers":["dev-server.example.com"]}
+{"level":"warn","ts":1731422843.0513868,"logger":"tls","msg":"stapling OCSP","error":"no OCSP stapling for [localhost]: no OCSP server specified in certificate","identifiers":["localhost"]}
+{"level":"info","ts":1731422843.054402,"logger":"tls","msg":"storage cleaning happened too recently; skipping for now","storage":"FileStorage:/Users/christophc/Library/Application Support/Caddy","instance":"cacd99a9-f43d-4613-8bc5-f5024b79c31d","try_again":1731509243.054401,"try_again_in":86399.999999666}
+{"level":"info","ts":1731422843.0544791,"msg":"autosaved config (load with --resume flag)","file":"/Users/christophc/Library/Application Support/Caddy/autosave.json"}
+{"level":"info","ts":1731422843.054496,"msg":"serving initial configuration"}
+{"level":"info","ts":1731422843.054525,"logger":"tls","msg":"finished cleaning storage units"}
+{"level":"info","ts":1731422843.055521,"logger":"watcher","msg":"watching config file for changes","config_file":"./CaddyfileDEV-defect-6683-map-read-write-crash-simple-theory1"}
+{"level":"info","ts":1731422859.0692182,"msg":"shutting down apps, then terminating","signal":"SIGTERM"}
+{"level":"warn","ts":1731422859.069242,"msg":"exiting; byeee!! 👋","signal":"SIGTERM"}
+{"level":"info","ts":1731422859.0692632,"logger":"http","msg":"servers shutting down; grace period initiated","duration":5}
+{"level":"info","ts":1731422859.069451,"logger":"admin","msg":"stopped previous server","address":"127.0.0.1:2019"}
+{"level":"info","ts":1731422859.06946,"msg":"shutdown complete","signal":"SIGTERM","exit_code":0}

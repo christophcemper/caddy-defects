@@ -1,0 +1,41 @@
+{"level":"info","ts":1731425877.2096488,"msg":"using config from file","file":"./CaddyfileDEV-defect-6683-map-read-write-crash-simple-theory1"}
+{"level":"info","ts":1731425877.211202,"msg":"adapted config to JSON","adapter":"caddyfile"}
+{"level":"warn","ts":1731425877.2112064,"msg":"Caddyfile input is not formatted; run 'caddy fmt --overwrite' to fix inconsistencies","adapter":"caddyfile","file":"./CaddyfileDEV-defect-6683-map-read-write-crash-simple-theory1","line":146}
+{"level":"info","ts":1731425877.2118173,"logger":"admin","msg":"admin endpoint started","address":"127.0.0.1:2019","enforce_origin":false,"origins":["//127.0.0.1:2019","//localhost:2019","//[::1]:2019"]}
+{"level":"info","ts":1731425877.2120092,"logger":"tls.cache.maintenance","msg":"started background certificate maintenance","cache":"0xc0007c3680"}
+{"level":"info","ts":1731425877.213466,"logger":"http.auto_https","msg":"server is listening only on the HTTPS port but has no TLS connection policies; adding one to enable TLS","server_name":"srv0","https_port":443}
+{"level":"info","ts":1731425877.2134912,"logger":"http.auto_https","msg":"enabling automatic HTTP->HTTPS redirects","server_name":"srv0"}
+{"level":"warn","ts":1731425877.2143962,"logger":"http.handlers.cache","msg":"You're running Souin with the default storage that is not optimized and for development purpose. We recommend to use at least one of the storages from https://github.com/darkweak/storages"}
+{"level":"info","ts":1731425877.2144172,"logger":"http.handlers.cache","msg":"Set backend timeout to 10s"}
+{"level":"info","ts":1731425877.2144206,"logger":"http.handlers.cache","msg":"Set cache timeout to 10s"}
+{"level":"info","ts":1731425877.2144227,"logger":"http.handlers.cache","msg":"Souin configuration is now loaded."}
+{"level":"warn","ts":1731425877.214797,"logger":"pki.ca.local","msg":"installing root certificate (you might be prompted for password)","path":"storage:pki/authorities/local/root.crt"}
+{"level":"info","ts":1731425877.2148864,"msg":"warning: \"certutil\" is not available, install \"certutil\" with \"apt install libnss3-tools\" or \"yum install nss-tools\" and try again"}
+{"level":"info","ts":1731425877.2148912,"msg":"define JAVA_HOME environment variable to use the Java trust"}
+{"level":"info","ts":1731425877.8650525,"msg":"certificate installed properly in linux trusts"}
+{"level":"info","ts":1731425877.8652163,"logger":"http","msg":"enabling HTTP/3 listener","addr":":443"}
+{"level":"info","ts":1731425877.86538,"logger":"http.log","msg":"server running","name":"srv0","protocols":["h1","h2","h3"]}
+{"level":"info","ts":1731425877.865408,"logger":"http.log","msg":"server running","name":"remaining_auto_https_redirects","protocols":["h1","h2","h3"]}
+{"level":"info","ts":1731425877.8654118,"logger":"http","msg":"enabling automatic TLS certificate management","domains":["dev-server.example.com","localhost"]}
+{"level":"info","ts":1731425877.8659234,"msg":"autosaved config (load with --resume flag)","file":"/root/.config/caddy/autosave.json"}
+{"level":"info","ts":1731425877.8659298,"msg":"serving initial configuration"}
+{"level":"info","ts":1731425877.8659225,"logger":"tls.obtain","msg":"acquiring lock","identifier":"dev-server.example.com"}
+{"level":"info","ts":1731425877.8659334,"logger":"tls.obtain","msg":"acquiring lock","identifier":"localhost"}
+{"level":"info","ts":1731425877.865974,"logger":"tls","msg":"cleaning storage unit","storage":"FileStorage:/root/.local/share/caddy"}
+{"level":"info","ts":1731425877.8663297,"logger":"tls.obtain","msg":"lock acquired","identifier":"localhost"}
+{"level":"info","ts":1731425877.8663304,"logger":"tls.obtain","msg":"lock acquired","identifier":"dev-server.example.com"}
+{"level":"info","ts":1731425877.8663852,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"dev-server.example.com"}
+{"level":"info","ts":1731425877.8663945,"logger":"tls","msg":"finished cleaning storage units"}
+{"level":"info","ts":1731425877.866417,"logger":"tls.obtain","msg":"obtaining certificate","identifier":"localhost"}
+{"level":"info","ts":1731425877.867224,"logger":"tls.obtain","msg":"certificate obtained successfully","identifier":"dev-server.example.com","issuer":"local"}
+{"level":"info","ts":1731425877.8672707,"logger":"tls.obtain","msg":"certificate obtained successfully","identifier":"localhost","issuer":"local"}
+{"level":"info","ts":1731425877.8672812,"logger":"tls.obtain","msg":"releasing lock","identifier":"dev-server.example.com"}
+{"level":"info","ts":1731425877.8673232,"logger":"tls.obtain","msg":"releasing lock","identifier":"localhost"}
+{"level":"warn","ts":1731425877.8675086,"logger":"tls","msg":"stapling OCSP","error":"no OCSP stapling for [dev-server.example.com]: no OCSP server specified in certificate","identifiers":["dev-server.example.com"]}
+{"level":"warn","ts":1731425877.867539,"logger":"tls","msg":"stapling OCSP","error":"no OCSP stapling for [localhost]: no OCSP server specified in certificate","identifiers":["localhost"]}
+{"level":"info","ts":1731425877.867827,"logger":"watcher","msg":"watching config file for changes","config_file":"./CaddyfileDEV-defect-6683-map-read-write-crash-simple-theory1"}
+{"level":"info","ts":1731425892.7029998,"msg":"shutting down apps, then terminating","signal":"SIGTERM"}
+{"level":"warn","ts":1731425892.7030144,"msg":"exiting; byeee!! 👋","signal":"SIGTERM"}
+{"level":"info","ts":1731425892.703037,"logger":"http","msg":"servers shutting down; grace period initiated","duration":5}
+{"level":"info","ts":1731425892.7032409,"logger":"admin","msg":"stopped previous server","address":"127.0.0.1:2019"}
+{"level":"info","ts":1731425892.7032504,"msg":"shutdown complete","signal":"SIGTERM","exit_code":0}

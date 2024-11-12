@@ -1,0 +1,22 @@
+HTTP/2 200 
+access-control-allow-origin: *
+age: 1
+alt-svc: h3=":443"; ma=2592000
+cache-control: public, max-age=300, must-revalidate
+cache-status: Souin; hit; ttl=299; key=POST-https-localhost-/8a4899c7-03f5-4dca-86f2-3249e5c33ca2?cache=false; detail=DEFAULT
+content-type: text/html; charset=utf-8
+date: Tue, 12 Nov 2024 15:38:12 GMT
+etag: W/"594d-bjtQXe335eTTFcR34hk8SwnjRLg"
+expect-ct: max-age=300
+pragma: cache
+referrer-policy: no-referrer
+strict-transport-security: max-age=15552000; includeSubDomains
+vary: Accept-Encoding
+x-content-type-options: nosniff
+x-dns-prefetch-control: off
+x-download-options: noopen
+x-frame-options: SAMEORIGIN
+x-permitted-cross-domain-policies: none
+x-xss-protection: 0
+content-length: 22861
+

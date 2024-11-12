@@ -1,0 +1,179 @@
+# isolation of special use of cache + reverse_proxy 
+# that is _maybe_ related or cause of defect issue 6883 "fatal **error:** concurrent map read and map write"
+# occured first Oct 28m second Nov 10 on a very busy production cady instance with MANY MORE hosts 
+# -- 
+# global config
+{
+	https_port 443
+	http_port 80
+
+	# on PROD we use the consul storage backend
+	# storage consul {
+	# 	address      "127.0.0.1:8500"
+	# 	token        ""
+	# 	timeout      "10"
+	# 	prefix       "caddytls"
+	# 	value_prefix "NNN"
+	# 	aes_key      "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN"
+	# 	tls_enabled  "false"
+	# 	tls_insecure "true"
+	# }
+
+	admin 127.0.0.1:2019
+
+	order netlify_redirects before redir
+	order netlify_redirects before handle
+
+	order handle_errors after handle
+
+	grace_period 5s
+
+	order cache before handle
+
+	# dev only
+	order log after handle_path
+
+	cache
+}
+
+## dfsd
+
+
+# re-usable snippet to modify HTTP headers for all reverse_proxy blocks
+(reverse-proxy-headers) {
+	header_down -Server
+	header_down -X-Powered-By
+	header_down X-XSS-Protection "1; mode=block"
+	header_down X-Content-Type-Options "nosniff"
+
+	# requires configuration in Cloudflare to sanitize X-Forwarded-For - https://www.authelia.com/integration/proxies/fowarded-headers/#cloudflare
+	# based on current list of Cloudflare IPs - https://www.cloudflare.com/en-gb/ips/ (2022-07-15)
+	trusted_proxies 103.21.244.0/22 103.22.200.0/22 103.31.4.0/22 104.16.0.0/13 104.24.0.0/14 108.162.192.0/18 131.0.72.0/22 141.101.64.0/18 162.158.0.0/15 172.64.0.0/13 173.245.48.0/20 188.114.96.0/20 190.93.240.0/20 197.234.240.0/22 198.41.128.0/17 2400:cb00::/32 2606:4700::/32 2803:f800::/32 2405:b500::/32 2405:8100::/32 2a06:98c0::/29 2c0f:f248::/32
+}
+
+(remove-headers) {
+	# remove X-Powered-By and Server response headers
+	header -X-Powered-By
+	header -Server
+
+	# remove X-Powered-By and Server error response headers
+	handle_errors {
+		header -X-Powered-By
+		header -Server
+	}
+}
+
+(logging) {
+	roll_size 1gb
+	roll_keep 10
+	roll_keep_for 720h
+
+	level DEBUG
+}
+
+(common-file-server) {
+	file_server
+	encode zstd gzip
+
+	try_files {path}
+
+	# turn // into /
+	uri path_regexp /{2,} /
+}
+
+localhost {
+	# on prod we don't use internal tls
+	tls internal
+
+	log {
+		# using hardcoded file here to avoid issues with relative paths or some placeholders, ENV expansions etc.
+		output file ./log/defect-6683-map-read-write-crash-simple/theory1/access.log {
+			import logging
+		}
+	}
+
+	# only on DEV
+	log debug {
+		# using hardcoded file here to avoid issues with relative paths or some placeholders, ENV expansions etc.
+		output file ./log/defect-6683-map-read-write-crash-simple/theory1/debug.log {
+			level DEBUG
+		}
+	}
+
+	# OAuth2 routes for Ory Hydra
+	handle /oauth2/login {
+		reverse_proxy localhost:8000
+	}
+
+	handle_path /caching-reverse-proxy/* {
+		# needs new xCaddy LRTcaddy build
+		cache {
+			allowed_http_verbs GET POST
+			log_level debug
+			stale 200s
+			ttl 1000s
+			default_cache_control store
+		}
+
+		header -server
+		header -x-powered-by
+
+		reverse_proxy https://snippet.pricewell.io {
+			header_up Host {upstream_hostport}
+			# header_down -cache-control  # Remove any existing cache-control headers
+			# header_down -pragma  # Remove any pragma headers
+			# header_down -expires  # Remove any expires headers
+			header_down -server
+			header_down Cache-Control "public, max-age=300, must-revalidate"
+			header_down Pragma "cache"
+			header_down expect-ct "max-age=300"
+		}
+	}
+
+	handle /oauth2/consent {
+		reverse_proxy localhost:8000
+	}
+
+	handle_path /oauth2/admin/* {
+		# only allow access to the admin interface from the internal network
+		reverse_proxy * localhost:47144
+	}
+
+	handle_path /oauth2/* {
+		reverse_proxy * localhost:48242
+	}
+
+
+	## reverse proxy the local Vite dev server
+	reverse_proxy localhost:5173
+
+	# on prod we use the load balancer like this
+	# reverse_proxy local-view-node019:3100 local-view-node018:3100 local-view-node017:3100 local-view-node016:3100 local-view-node015:3100 local-view-node014:3100 local-view-node013:3100 local-view-node012:3100 local-view-node011:3100 local-view-node010:3100 {
+	# 	import reverse-proxy-headers
+	# 	lb_policy cookie XXXXXX NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+	# 	fail_duration 30s
+	# }
+}
+
+dev-server.example.com {
+	tls internal
+	encode zstd gzip
+
+	## the first API is not supported anymore
+	respond /endpoint1/* "Gone" 410 {
+		close
+	}
+
+	## reverse proxy the actual API
+	handle_path /endpoint4/* {
+		reverse_proxy 127.0.0.1:8099 {
+			fail_duration 30s
+		}
+	}
+
+	# for complete /csv/ and /json/ subfolders allow requests from any origin
+	header /csv* Access-Control-Allow-Origin "*"
+	header /json* Access-Control-Allow-Origin "*"
+
+	import common-file-server
+}
